@@ -1,1 +1,146 @@
+<div id="admin-dashboard-view" class="hidden admin-layout">
+        <aside class="admin-sidebar" id="admin-sidebar">
+            <div class="sidebar-brand">
+                <i class="fas fa-user-shield"></i>
+                <div>
+                    <h4 id="user-display-name">Super Admin</h4>
+                    <span>CMS Panel v2.0</span>
+                </div>
+            </div>
+            <ul class="sidebar-menu">
+                <li id="menu-tab-dashboard" class="active" onclick="switchTab('dashboard')"><i class="fas fa-chart-line"></i> Ringkasan Data</li>
+                <li id="menu-tab-manage-static" onclick="switchTab('manage-static')"><i class="fas fa-sliders-h"></i> Kelola Profil & Sambutan</li>
+                <li id="menu-tab-manage-news" onclick="switchTab('manage-news')"><i class="fas fa-newspaper"></i> Kelola Berita</li>
+                <li id="menu-tab-manage-announcements" onclick="switchTab('manage-announcements')"><i class="fas fa-bullhorn"></i> Kelola Pengumuman</li>
+                <li id="menu-tab-manage-agenda" onclick="switchTab('manage-agenda')"><i class="fas fa-calendar-check"></i> Kelola Agenda</li>
+            </ul>
+            <div class="sidebar-footer">
+                <button class="btn-darkmode" id="dark-mode-toggle" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> Mode Gelap</button>
+                <button class="btn-logout" onclick="handleLogout()"><i class="fas fa-power-off"></i> Keluar Sistem</button>
+            </div>
+        </aside>
 
+        <main class="admin-workspace">
+            <header class="workspace-header">
+                <button class="sidebar-toggle" onclick="document.getElementById('admin-sidebar').classList.toggle('active')"><i class="fas fa-bars"></i></button>
+                <h2 id="workspace-title">Ringkasan Eksekutif Portal</h2>
+                <button class="btn-live-view" onclick="switchView('public')"><i class="fas fa-external-link-alt"></i> Lihat Web Publik</button>
+            </header>
+
+            <div class="workspace-scrollable-content">
+                <div id="tab-dashboard" class="tab-content">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="sc-icon blue"><i class="fas fa-newspaper"></i></div>
+                            <div class="sc-info"><h3 id="dash-stat-news">0</h3><p>Total Artikel Berita</p></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="sc-icon gold"><i class="fas fa-bullhorn"></i></div>
+                            <div class="sc-info"><h3 id="dash-stat-ann">0</h3><p>Pengumuman Aktif</p></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="sc-icon green"><i class="fas fa-calendar-alt"></i></div>
+                            <div class="sc-info"><h3 id="dash-stat-age">0</h3><p>Agenda Sekolah</p></div>
+                        </div>
+                    </div>
+                    <div class="chart-container-box">
+                        <h3>Analisis Data Aktivitas Penulisan Artikel</h3>
+                        <canvas id="analyticsChart" width="400" height="150"></canvas>
+                    </div>
+                </div>
+
+                <div id="tab-manage-static" class="tab-content hidden">
+                    <div class="action-bar-crud">
+                        <h3>Pengaturan Konten Profil & Sambutan Sekolah</h3>
+                    </div>
+                    <form id="static-content-form" onsubmit="saveStaticContent(event)" style="max-width: 800px; margin-top: 20px;">
+                        <div class="form-group-sub">
+                            <label>Nama Kepala Sekolah</label>
+                            <input type="text" id="static-kepsek-name" class="form-control" required>
+                        </div>
+                        <div class="form-group-sub">
+                            <label>URL Foto Kepala Sekolah</label>
+                            <input type="text" id="static-kepsek-img" class="form-control" required>
+                        </div>
+                        <div class="form-group-sub">
+                            <label>Teks Sambutan Kepala Sekolah</label>
+                            <textarea id="static-kepsek-welcome" class="form-control" rows="4" required></textarea>
+                        </div>
+                        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 25px 0;">
+                        <div class="form-group-sub">
+                            <label>Tagline / Moto Sekolah (Di bawah Nama Sekolah)</label>
+                            <input type="text" id="static-school-tagline" class="form-control" required>
+                        </div>
+                        <div class="form-group-sub">
+                            <label>Tentang Sekolah (Footer)</label>
+                            <textarea id="static-school-about" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary-block" style="background-color: var(--accent-gold); color: #000; font-weight: 600;">
+                            <i class="fas fa-save"></i> Simpan Perubahan Konten
+                        </button>
+                    </form>
+                </div>
+
+                <div id="tab-manage-news" class="tab-content hidden">
+                    <div class="action-bar-crud">
+                        <h3>Manajemen Database Artikel Berita</h3>
+                        <button class="btn-action-add" onclick="openNewsModal('add')"><i class="fas fa-plus-circle"></i> Tulis Berita Baru</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>Gambar</th>
+                                    <th>Judul Artikel Berita</th>
+                                    <th>Kategori</th>
+                                    <th>Penulis</th>
+                                    <th>Tanggal</th>
+                                    <th>Aksi Kontrol</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-news-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="tab-manage-announcements" class="tab-content hidden">
+                    <div class="action-bar-crud">
+                        <h3>Manajemen Papan Pengumuman Resmi</h3>
+                        <button class="btn-action-add" onclick="openAnnModal()"><i class="fas fa-plus-circle"></i> Buat Pengumuman Baru</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>Judul Pengumuman</th>
+                                    <th>Tanggal</th>
+                                    <th>Status Dokumen</th>
+                                    <th>Aksi Kontrol</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-ann-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="tab-manage-agenda" class="tab-content hidden">
+                    <div class="action-bar-crud">
+                        <h3>Manajemen Agenda Kegiatan Sekolah</h3>
+                        <button class="btn-action-add" onclick="openAgendaModal()"><i class="fas fa-plus-circle"></i> Jadwalkan Agenda Baru</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>Nama Kegiatan / Agenda</th>
+                                    <th>Pelaksanaan Hari/Tanggal</th>
+                                    <th>Aksi Kontrol</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-agenda-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
