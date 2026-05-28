@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PORTAL BERITA - SMP Negeri 1 Lilirilau</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="close-lightbox">&times;</span>
+        <img id="lightbox-img" src="" alt="Preview">
+    </div>
+
+    <div id="public-view">
+        <div class="breaking-news-bar">
+            <span class="bn-title"><i class="fas fa-bolt"></i> BREAKING NEWS</span>
+            <div class="bn-ticker">
+                <div class="bn-marquee" id="breaking-news-ticker">
+                    Selamat Datang di Portal Berita Digital Resmi SMP Negeri 1 Lilirilau, Kabupaten Soppeng. Informasi edukatif, transparan, dan berprestasi!
+                </div>
+            </div>
+        </div>
+
+        <div class="top-header">
+            <div class="container container-flex">
+                <div class="th-left">
+                    <span><i class="fas fa-map-marker-alt"></i> Jl. Pahlawan No. 39 Pajalesang, Soppeng</span>
+                    <span><i class="fas fa-envelope"></i> info@smpn1lilirilau.sch.id</span>
+                </div>
+                <div class="th-right">
+                    <button onclick="switchView('admin-login')" class="btn-admin-login"><i class="fas fa-lock"></i> Admin Panel</button>
+                </div>
+            </div>
+        </div>
+
+        <header class="main-header">
+            <div class="container header-brand-container">
+                <div class="brand-wrapper">
+                    <div class="school-logo" style="background: transparent; box-shadow: none; width: 65px; height: 65px;">
+                        <img src="assets/LOGO SMP CABBENG web (4) (2).png" alt="Logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" style="width:100%; height:100%; object-fit:contain;">
+                        <div class="fallback-logo" style="display:none; width:65px; height:65px; background:linear-gradient(135deg, var(--accent-gold), #fff); border-radius:50%; align-items:center; justify-content:center; font-size:30px; color:#0A192F;"><i class="fas fa-graduation-cap"></i></div>
+                    </div>
+                    <div class="brand-text">
+                        <h1>SMP NEGERI 1 LILIRILAU</h1>
+                        <p>Cerdas, Berkarakter, Unggul, dan Berbudaya Digital</p>
+                    </div>
+                </div>
+                <div class="header-search">
+                    <input type="text" id="global-search" placeholder="Cari berita..." oninput="handleLiveSearch()">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+        </header>
+
+        <nav class="navbar">
+            <div class="container nav-container">
+                <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#" class="nav-item-link active" onclick="filterByMenu('all', this)">Home</a></li>
+                    <li><a href="#" class="nav-item-link" onclick="filterByMenu('Akademik', this)">Profil & Akademik</a></li>
+                    <li><a href="#" class="nav-item-link" onclick="filterByMenu('Prestasi Siswa', this)">Prestasi</a></li>
+                    <li><a href="#" class="nav-item-link" onclick="filterByMenu('OSIS', this)">OSIS</a></li>
+                    <li><a href="#" class="nav-item-link" onclick="filterByMenu('Pramuka', this)">Pramuka</a></li>
+                    <li><a href="#" class="nav-item-link" onclick="filterByMenu('Ekstrakurikuler', this)">Ekstrakurikuler</a></li>
+                    <li><a href="#" class="nav-item-link" onclick="filterByMenu('Event Sekolah', this)">Event</a></li>
+                    <li><a href="#" onclick="showSection('galeri-section')">Galeri</a></li>
+                    <li><a href="#" onclick="showSection('pengumuman-section')">Pengumuman & PPDB</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="container main-content-layout">
+            
+            <div id="homepage-core-view">
+                <div class="hero-grid">
+                    <div class="slider-wrapper" id="hero-slider">
+                        <div class="slide active">
+                            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80" alt="Slider 1">
+                            <div class="slide-caption">
+                                <span class="badge red">UTAMA</span>
+                                <h2>Menuju Sekolah Adiwiyata Berbasis Literasi Digital Modern</h2>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="welcome-card">
+                        <div class="welcome-header">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80" alt="Kepala Sekolah">
+                            <div>
+                                <h3>Sambutan Kepala Sekolah</h3>
+                                <p class="sub">SMPN 1 Lilirilau</p>
+                            </div>
+                        </div>
+                        <p class="welcome-text">"Selamat datang di Portal Berita Resmi SMPN 1 Lilirilau. Melalui platform digital ini, kami berkomitmen menyajikan transparansi informasi, publikasi prestasi siswa-siswi, serta kedinamisan proses belajar mengajar."</p>
+                        <div class="welcome-footer"><strong>H. Andi Mahfud, M.Pd.</strong></div>
+                    </div>
+                </div>
+
+                <div class="newsroom-grid">
+                    <div class="news-stream-container">
+                        <div class="section-heading">
+                            <h2><span class="line"></span>Berita Terkini & Informasi Terupdate</h2>
+                            <div class="category-pills" id="category-pills-container">
+                                </div>
+                        </div>
+                        
+                        <div class="news-cards-grid" id="news-cards-container">
+                            </div>
+                    </div>
+
+                    <aside class="news-sidebar">
+                        <div class="sidebar-widget">
+                            <h3 class="widget-title"><i class="fas fa-bullhorn"></i> Pengumuman Resmi</h3>
+                            <div class="widget-content" id="sidebar-pengumuman"></div>
+                        </div>
+
+                        <div class="sidebar-widget">
+                            <h3 class="widget-title"><i class="fas fa-calendar-alt"></i> Agenda Sekolah</h3>
+                            <div class="widget-content" id="sidebar-agenda"></div>
+                        </div>
+
+                        <div class="sidebar-widget">
+                            <h3 class="widget-title"><i class="fas fa-fire"></i> Paling Banyak Dibaca</h3>
+                            <div class="widget-content" id="sidebar-populer"></div>
+                        </div>
+                    </aside>
+                </div>
+
+                <section class="fullwidth-section" id="galeri-section">
+                    <div class="section-heading">
+                        <h2><span class="line"></span>Galeri Dokumentasi Kegiatan</h2>
+                    </div>
+                    <div class="gallery-grid" id="gallery-container"></div>
+                </section>
+
+                <section class="fullwidth-section" id="pengumuman-section">
+                    <div class="section-heading">
+                        <h2><span class="line"></span>Pusat Data Pengumuman Akademik & PPDB</h2>
+                    </div>
+                    <div class="announcement-board" id="full-announcement-container"></div>
+                </section>
+            </div>
+
+            <div id="article-detail-view" class="hidden">
+                <div class="breadcrumb">
+                    <a href="#" onclick="closeArticleDetail()">Home</a> / <span id="detail-breadcrumb-cat">Kategori</span> / <span id="detail-breadcrumb-title">Judul Berita</span>
+                </div>
+                <article class="main-article">
+                    <header class="article-header">
+                        <span class="article-cat-badge" id="detail-category">Kategori</span>
+                        <h1 id="detail-title">Judul Utama Artikel Berita Sekolah</h1>
+                        <div class="article-meta">
+                            <span><i class="fas fa-user"></i> Oleh: <strong id="detail-author">Admin</strong></span>
+                            <span><i class="fas fa-calendar-day"></i> <span id="detail-date">28 Mei 2026</span></span>
+                            <span><i class="fas fa-eye"></i> Dibaca: <span id="detail-views">0</span> kali</span>
+                        </div>
+                    </header>
+                    <div class="article-featured-image">
+                        <img id="detail-image" src="" alt="Featured Images">
+                    </div>
+                    <div class="article-body" id="detail-content"></div>
+                    <footer class="article-footer">
+                        <div class="share-box">
+                            <span>Bagikan Berita:</span>
+                            <button class="btn-share fb" onclick="alert('Bagikan ke Facebook')"><i class="fab fa-facebook-f"></i></button>
+                            <button class="btn-share tw" onclick="alert('Bagikan ke Twitter/X')"><i class="fab fa-twitter"></i></button>
+                            <button class="btn-share wa" onclick="alert('Bagikan ke WhatsApp')"><i class="fab fa-whatsapp"></i></button>
+                        </div>
+                        <button class="btn-back-home" onclick="closeArticleDetail()"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</button>
+                    </footer>
+                </article>
+
+                <div class="related-news-section">
+                    <h3>Berita Terkait Lainnya</h3>
+                    <div class="related-grid" id="related-news-container"></div>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="site-footer">
+            <div class="container footer-grid">
+                <div class="footer-info">
+                    <div class="footer-brand">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>SMPN 1 LILIRILAU</span>
+                    </div>
+                    <p>Membentuk insan cerdas, religius, adaptif teknologi, dan berwawasan lingkungan global lokal di Kabupaten Soppeng.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan Cepat</h4>
+                    <ul>
+                        <li><a href="#" onclick="filterCategory('all')">Beranda Utama</a></li>
+                        <li><a href="#" onclick="filterCategory('Akademik')">Akademik & Kurikulum</a></li>
+                        <li><a href="#" onclick="showSection('pengumuman-section')">PPDB Digital</a></li>
+                        <li><a href="#" onclick="switchView('admin-login')">Portal Akses Guru</a></li>
+                    </ul>
+                </div>
+                <div class="footer-stats">
+                    <h4>Statistik Kunjungan</h4>
+                    <div class="stat-box-footer">
+                        <div><p>Hari Ini</p><strong>142</strong></div>
+                        <div><p>Total Pengunjung</p><strong>34,921</strong></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container footer-bottom-flex">
+                    <p>&copy; 2026 SMP Negeri 1 Lilirilau. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div id="admin-login-view" class="hidden auth-wrapper">
+        <div class="login-card glassmorphism">
+            <div class="login-header">
+                <i class="fas fa-shield-alt auth-icon"></i>
+                <h2>Sistem Autentikasi CMS</h2>
+                <p>Silakan masuk menggunakan kredensial otoritas Anda</p>
+            </div>
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group-sub">
+                    <label><i class="fas fa-user-tag"></i> Pilih Role Otoritas</label>
+                    <select id="login-role" class="form-control">
+                        <option value="Super Admin">Super Admin</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Editor">Editor</option>
+                    </select>
+                </div>
+                <div class="form-group-sub">
+                    <label><i class="fas fa-key"></i> Kode Sandi Akses</label>
+                    <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+                    <small style="color:rgba(255,255,255,0.6); font-size:11px; margin-top:5px; display:block;">Default password: admin123</small>
+                </div>
+                <button type="submit" class="btn-primary-block">Masuk ke Ruang Kerja <i class="fas fa-sign-in-alt"></i></button>
+            </form>
+            <button class="btn-text-back" onclick="switchView('public')"><i class="fas fa-arrow-left"></i> Kembali ke Portal Publik</button>
+        </div>
+    </div>
+
+    <div id="admin-dashboard-view" class="hidden admin-layout">
+        <aside class="admin-sidebar" id="admin-sidebar">
+            <div class="sidebar-brand">
+                <i class="fas fa-user-shield"></i>
+                <div>
+                    <h4 id="user-display-name">Super Admin</h4>
+                    <span>CMS Panel v2.0</span>
+                </div>
+            </div>
+            <ul class="sidebar-menu">
+                <li id="menu-tab-dashboard" class="active" onclick="switchTab('dashboard')"><i class="fas fa-chart-line"></i> Ringkasan Data</li>
+                <li id="menu-tab-manage-news" onclick="switchTab('manage-news')"><i class="fas fa-newspaper"></i> Kelola Berita</li>
+                <li id="menu-tab-manage-announcements" onclick="switchTab('manage-announcements')"><i class="fas fa-bullhorn"></i> Kelola Pengumuman</li>
+                <li id="menu-tab-manage-agenda" onclick="switchTab('manage-agenda')"><i class="fas fa-calendar-check"></i> Kelola Agenda</li>
+            </ul>
+            <div class="sidebar-footer">
+                <button class="btn-darkmode" id="dark-mode-toggle" onclick="toggleDarkMode()"><i class="fas fa-moon"></i> Mode Gelap</button>
+                <button class="btn-logout" onclick="handleLogout()"><i class="fas fa-power-off"></i> Keluar Sistem</button>
+            </div>
+        </aside>
+
+        <main class="admin-workspace">
+            <header class="workspace-header">
+                <button class="sidebar-toggle" onclick="document.getElementById('admin-sidebar').classList.toggle('active')"><i class="fas fa-bars"></i></button>
+                <h2 id="workspace-title">Ringkasan Eksekutif Portal</h2>
+                <button class="btn-live-view" onclick="switchView('public')"><i class="fas fa-external-link-alt"></i> Lihat Web Publik</button>
+            </header>
+
+            <div class="workspace-scrollable-content">
+                <div id="tab-dashboard" class="tab-content">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="sc-icon blue"><i class="fas fa-newspaper"></i></div>
+                            <div class="sc-info"><h3 id="dash-stat-news">0</h3><p>Total Artikel Berita</p></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="sc-icon gold"><i class="fas fa-bullhorn"></i></div>
+                            <div class="sc-info"><h3 id="dash-stat-ann">0</h3><p>Pengumuman Aktif</p></div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="sc-icon green"><i class="fas fa-calendar-alt"></i></div>
+                            <div class="sc-info"><h3 id="dash-stat-age">0</h3><p>Agenda Sekolah</p></div>
+                        </div>
+                    </div>
+                    <div class="chart-container-box">
+                        <h3>Analisis Data Aktivitas Penulisan Artikel</h3>
+                        <canvas id="analyticsChart" width="400" height="150"></canvas>
+                    </div>
+                </div>
+
+                <div id="tab-manage-news" class="tab-content hidden">
+                    <div class="action-bar-crud">
+                        <h3>Manajemen Database Artikel Berita</h3>
+                        <button class="btn-action-add" onclick="openNewsModal('add')"><i class="fas fa-plus-circle"></i> Tulis Berita Baru</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>Gambar</th>
+                                    <th>Judul Artikel Berita</th>
+                                    <th>Kategori</th>
+                                    <th>Penulis</th>
+                                    <th>Tanggal</th>
+                                    <th>Aksi Kontrol</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-news-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="tab-manage-announcements" class="tab-content hidden">
+                    <div class="action-bar-crud">
+                        <h3>Manajemen Papan Pengumuman Resmi</h3>
+                        <button class="btn-action-add" onclick="openAnnModal()"><i class="fas fa-plus-circle"></i> Buat Pengumuman Baru</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>Judul Pengumuman</th>
+                                    <th>Tanggal</th>
+                                    <th>Status Dokumen</th>
+                                    <th>Aksi Kontrol</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-ann-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="tab-manage-agenda" class="tab-content hidden">
+                    <div class="action-bar-crud">
+                        <h3>Manajemen Agenda Kegiatan Sekolah</h3>
+                        <button class="btn-action-add" onclick="openAgendaModal()"><i class="fas fa-plus-circle"></i> Jadwalkan Agenda Baru</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>Nama Kegiatan / Agenda</th>
+                                    <th>Pelaksanaan Hari/Tanggal</th>
+                                    <th>Aksi Kontrol</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-agenda-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal" id="news-modal">
+        <div class="modal-content glassmorphism">
+            <div class="modal-header">
+                <h3 id="news-modal-title">Form Data Berita</h3>
+                <span class="close-modal" onclick="closeModal('news-modal')">&times;</span>
+            </div>
+            <form id="news-form" onsubmit="saveNewsData(event)">
+                <input type="hidden" id="news-id-field">
+                <div class="form-group-sub">
+                    <label>Judul Berita</label>
+                    <input type="text" id="news-title-field" class="form-control" required>
+                </div>
+                <div class="form-row-twin">
+                    <div class="form-group-sub">
+                        <label>Kategori</label>
+                        <select id="news-cat-field" class="form-control"></select>
+                    </div>
+                    <div class="form-group-sub">
+                        <label>URL Gambar Utama</label>
+                        <input type="text" id="news-img-field" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group-sub">
+                    <label>Konten Tulisan Artikel Berita</label>
+                    <textarea id="news-content-field" class="form-control" rows="6" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary-block">Simpan ke Basis Data Berita</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="ann-modal">
+        <div class="modal-content glassmorphism">
+            <div class="modal-header">
+                <h3 id="ann-modal-title">Form Pengumuman</h3>
+                <span class="close-modal" onclick="closeModal('ann-modal')">&times;</span>
+            </div>
+            <form id="ann-form" onsubmit="saveAnnData(event)">
+                <input type="hidden" id="ann-id-field">
+                <div class="form-group-sub">
+                    <label>Judul Pengumuman</label>
+                    <input type="text" id="ann-title-field" class="form-control" required>
+                </div>
+                <div class="form-group-sub">
+                    <label>Status Dokumen</label>
+                    <select id="ann-status-field" class="form-control">
+                        <option value="Aktif">Aktif (Tampilkan)</option>
+                        <option value="Nonaktif">Nonaktif (Arsip)</option>
+                    </select>
+                </div>
+                <div class="form-group-sub">
+                    <label>Isi Detail Pengumuman</label>
+                    <textarea id="ann-content-field" class="form-control" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary-block">Publikasikan Pengumuman</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="agenda-modal">
+        <div class="modal-content glassmorphism">
+            <div class="modal-header">
+                <h3 id="agenda-modal-title">Form Penjadwalan Agenda</h3>
+                <span class="close-modal" onclick="closeModal('agenda-modal')">&times;</span>
+            </div>
+            <form id="agenda-form" onsubmit="saveAgendaData(event)">
+                <input type="hidden" id="agenda-id-field">
+                <div class="form-group-sub">
+                    <label>Nama / Deskripsi Agenda Kegiatan</label>
+                    <input type="text" id="agenda-title-field" class="form-control" required>
+                </div>
+                <div class="form-group-sub">
+                    <label>Tanggal Pelaksanaan</label>
+                    <input type="date" id="agenda-date-field" class="form-control" required>
+                </div>
+                <button type="submit" class="btn-primary-block">Simpan Jadwal Kegiatan</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
